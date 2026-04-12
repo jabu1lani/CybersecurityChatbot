@@ -1,15 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CybersecurityChatbot
 {
-    internal class Program
+    // This class handles the application startup and initialization
+
+    class Program
     {
-        static void Main(string[] args)
+        // The main method that starts the chatbot application Using async Task Main
+
+        static async Task Main(string[] args)
         {
+            Console.Title = "Cybersecurity Awareness Bot";
+
+            // Create an instance of the Chatbot class which contains all bot logic
+            var chatbot = new Chatbot();
+
+            // Start the chatbot and wait for completion
+            // The user will interact with the bot until they choose to exit
+            await chatbot.StartAsync();
         }
     }
 }
