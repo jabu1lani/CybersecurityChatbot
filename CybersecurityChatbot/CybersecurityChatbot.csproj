@@ -50,6 +50,7 @@
     <Compile Include="UIManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include=".github\workflows\dotnet.yml" />
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>

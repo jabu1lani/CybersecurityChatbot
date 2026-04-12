@@ -43,6 +43,7 @@ namespace CybersecurityChatbot
             }
         }
 
+
         // Displays the ASCII art logo for the Cybersecurity Awareness Bot
         // The art creates a visual identity for the chatbot
         public void DisplayAsciiArt()
@@ -71,7 +72,7 @@ namespace CybersecurityChatbot
     ║              ██████╔╝╚██████╔╝   ██║                             ║
     ║              ╚═════╝  ╚═════╝    ╚═╝                             ║
     ║                                                                  ║
-    ║           CYBERSECURITY AWARENESS ASSISTANT                       ║
+    ║           CYBERSECURITY AWARENESS ASSISTANT                      ║
     ║                                                                  ║
     ╚══════════════════════════════════════════════════════════════════╝
             ";
@@ -87,8 +88,12 @@ namespace CybersecurityChatbot
         {
             DisplayDivider();
             DisplayColoredText("WELCOME TO THE CYBERSECURITY AWARENESS BOT", ConsoleColor.Yellow);
+            Console.WriteLine();
             DisplayColoredText("Your personal assistant for online safety education", ConsoleColor.White);
+            Console.WriteLine();
             DisplayDivider();
+            
+            
         }
 
         // Shows a personalized greeting using the user's name
@@ -97,13 +102,17 @@ namespace CybersecurityChatbot
         {
             DisplayDivider();
             DisplayColoredText($"Hello, {userName}! 👋", ConsoleColor.Green);
+            Console.WriteLine();
             DisplayColoredText("I'm here to help you learn about staying safe online.", ConsoleColor.White);
+            Console.WriteLine();
             DisplayColoredText("You can ask me about:", ConsoleColor.Yellow);
-            DisplayColoredText("  • Password safety", ConsoleColor.Magenta);
+            Console.WriteLine();
+            DisplayColoredText("000• Password safety", ConsoleColor.Magenta);
             DisplayColoredText("  • Phishing scams", ConsoleColor.Magenta);
             DisplayColoredText("  • Safe browsing habits", ConsoleColor.Magenta);
             DisplayColoredText("  • General cybersecurity tips", ConsoleColor.Magenta);
-            DisplayDivider();
+            Console.WriteLine();
+            
         }
 
         // Draws a visual separator line using box-drawing characters

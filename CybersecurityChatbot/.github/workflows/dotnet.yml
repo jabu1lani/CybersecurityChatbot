@@ -1,0 +1,46 @@
+﻿# Name of the workflow - this appears in GitHub Actions tab
+name: .NET Build and Test
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push to main or master branch
+  push:
+    branches: [ main, master ]
+  
+  # Triggers the workflow on pull request to main or master
+  pull_request:
+    branches: [ main, master ]
+
+  # Allows you to run this workflow manually from Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Sets up .NET SDK
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+
+      # Restores NuGet packages
+      - name: Restore dependencies
+        run: dotnet restore
+
+      # Builds the application
+      - name: Build
+        run: dotnet build --no-restore --configuration Release
+
+      # Runs tests (add this when you have tests in Part 2/3)
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
