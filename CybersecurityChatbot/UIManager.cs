@@ -58,12 +58,7 @@ namespace CybersecurityChatbot
     ║     ╚██████╗   ██║   ██████╔╝███████╗██║  ██║                    ║
     ║      ╚═════╝   ╚═╝   ╚═════╝ ╚══════╝╚═╝  ╚═╝                    ║
     ║                                                                  ║
-    ║         █████╗ ██╗    ██╗ █████╗ ██████╗ ███████╗                ║
-    ║        ██╔══██╗██║    ██║██╔══██╗██╔══██╗██╔════╝                ║
-    ║        ███████║██║ █╗ ██║███████║██████╔╝███████╗                ║
-    ║        ██╔══██║██║███╗██║██╔══██║██╔══██╗╚════██║                ║
-    ║        ██║  ██║╚███╔███╔╝██║  ██║██║  ██║███████║                ║
-    ║        ╚═╝  ╚═╝ ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝                ║
+    ║                                                                  ║
     ║                                                                  ║
     ║              ██████╗  ██████╗ ████████╗                          ║
     ║              ██╔══██╗██╔═══██╗╚══██╔══╝                          ║
@@ -107,7 +102,7 @@ namespace CybersecurityChatbot
             Console.WriteLine();
             DisplayColoredText("You can ask me about:", ConsoleColor.Yellow);
             Console.WriteLine();
-            DisplayColoredText("000• Password safety", ConsoleColor.Magenta);
+            DisplayColoredText("• Password safety", ConsoleColor.Magenta);
             DisplayColoredText("  • Phishing scams", ConsoleColor.Magenta);
             DisplayColoredText("  • Safe browsing habits", ConsoleColor.Magenta);
             DisplayColoredText("  • General cybersecurity tips", ConsoleColor.Magenta);

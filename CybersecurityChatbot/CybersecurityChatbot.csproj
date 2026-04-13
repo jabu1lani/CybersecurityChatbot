@@ -57,5 +57,8 @@
   <ItemGroup>
     <Folder Include="audio\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="ASCII\TextFile1.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
