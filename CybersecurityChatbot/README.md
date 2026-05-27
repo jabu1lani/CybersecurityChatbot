@@ -1,31 +1,38 @@
-﻿# Cybersecurity Awareness Chatbot - Part 1
+﻿# Cybersecurity Awareness Chatbot - Part 2
 
-## Project Overview
-This command-line chatbot educates South African citizens about cybersecurity threats including phishing, malware, and social engineering. The bot provides interactive conversations about online safety practices.
+**Student Name:** [Jabulani Maphakela]
+**Student Number:** [10467452]
+
+## Description
+A WPF-based cybersecurity awareness chatbot that helps users learn about online safety through interactive conversations. Features include keyword recognition, sentiment detection, memory storage, and random responses.
 
 ## Features Implemented
+- ✅ WPF GUI with dark theme and ASCII art
+- ✅ Voice greeting on startup
+- ✅ Keyword recognition (password, phishing, privacy, scam, malware, safe browsing)
+- ✅ Random responses for each topic
+- ✅ Memory storage (user name and favourite topics)
+- ✅ Sentiment detection (worried, curious, frustrated, happy)
+- ✅ Follow-up conversation handling
+- ✅ Error handling with fallback responses
+- ✅ OOP design with separate classes
 
-### Core Features (Required for Part 1)
-- 🎤 **Voice Greeting**: Plays a recorded WAV file when the application launches
-- 🎨 **ASCII Art Display**: Shows a custom cybersecurity-themed logo
-- 💬 **Personalized Conversations**: Uses the user's name throughout the session
-- 🔐 **Cybersecurity Topics**: Covers password safety, phishing, and safe browsing
-- ✅ **Input Validation**: Handles empty inputs and unrecognized queries gracefully
-- 🎨 **Enhanced Console UI**: Uses colored text, borders, and visual formatting
-- ⌨️ **Typing Effect**: Simulates natural conversation with character-by-character display
+## Prerequisites
+- Visual Studio 2022
+- .NET 8.0 SDK
+- Windows OS
 
-### Technical Implementation
-- **Object-Oriented Design**: Separated concerns into three main classes
-  - `Program.cs`: Application entry point
-  - `Chatbot.cs`: Main conversation orchestration
-  - `UIManager.cs`: All visual and audio presentation
-  - `ResponseHandler.cs`: Input processing and response generation
-- **GitHub Integration**: Minimum 6 commits with meaningful messages
-- **CI/CD Pipeline**: GitHub Actions workflow for automated builds
+## How to Run
+1. Clone the repository
+2. Open CybersecurityChatbot.sln in Visual Studio 2022
+3. Place your greeting.wav file in the project root
+4. Build the solution (Ctrl+Shift+B)
+5. Run the application (F5)
 
-## System Requirements
-- **Operating System**: Windows (required for System.Media audio playback)
-- **.NET Version**: .NET 6.0 or higher
-- **Development Environment**: Visual Studio 2022 or VS Code with C# extensions
-- **Audio**: Speakers or headphones for voice greeting
+## GitHub Repository
+[https://github.com/jabu1lani/CybersecurityChatbot.git]
+
+## YouTube Video Demonstration
+[https://youtu.be/aaeKNgbuL50]
+
 

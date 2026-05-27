@@ -76,6 +76,7 @@ namespace CybersecurityChatbot
 
         public string? GetResponse(string userInput)
         {
+
             string lowerInput = userInput.ToLower();
 
             foreach (var keyword in _responses.Keys)
