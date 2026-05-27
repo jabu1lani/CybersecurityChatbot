@@ -95,7 +95,7 @@ namespace CybersecurityChatbot
             // Display bot response
             AppendBotMessage(botResponse);
 
-            // Scroll to bottom
+            // Scroll to botom
             ScrollToBottom();
         }
 
