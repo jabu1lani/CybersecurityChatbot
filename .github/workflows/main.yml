@@ -21,13 +21,15 @@ jobs:
         dotnet-version: 9.0.x
     
     - name: Restore dependencies
+      working-directory: CybersecurityChatbot  # ← Navigate to the subfolder
       run: dotnet restore CybersecurityChatbot.csproj
     
     - name: Build solution
+      working-directory: CybersecurityChatbot  # ← Navigate to the subfolder
       run: dotnet build CybersecurityChatbot.csproj --configuration Release --no-restore
     
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: CybersecurityBot-Release
-        path: bin/Release/net9.0-windows/
+        path: CybersecurityChatbot/bin/Release/
