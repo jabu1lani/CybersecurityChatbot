@@ -26,4 +26,8 @@
     <None Include="bin\Debug\net10.0-windows\greeting.wav" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MySql.Data" Version="9.7.0" />
+  </ItemGroup>
+
 </Project>
