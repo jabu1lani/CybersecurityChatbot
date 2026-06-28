@@ -1,0 +1,33 @@
+name: .NET Build
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 9.0.x
+    
+    - name: Restore dependencies
+      run: dotnet restore CybersecurityChatbot.csproj
+    
+    - name: Build solution
+      run: dotnet build CybersecurityChatbot.csproj --configuration Release --no-restore
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: CybersecurityBot-Release
+        path: bin/Release/net9.0-windows/
