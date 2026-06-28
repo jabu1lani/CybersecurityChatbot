@@ -7,36 +7,54 @@ namespace CybersecurityChatbot
     public class DatabaseHelper
     {
         private string _connectionString;
-        private string _connectionString = "Server=localhost;Database=cybersecurity_bot;Uid=root;Pwd=yourpassword;";
+        private bool _isConnected = false;
 
         public DatabaseHelper()
         {
-            InitializeDatabase();
+            string password = "MySecurePassword123";
+            string server = "localhost";
+            string database = "cybersecurity_bot";
+            string username = "root";
+
+            _connectionString = $"Server={server};Database={database};Uid={username};Pwd={password};";
+
+            try
+            {
+                using (var conn = new MySqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    _isConnected = true;
+                }
+            }
+            catch
+            {
+                _isConnected = false;
+            }
         }
 
-        private void InitializeDatabase()
+        public bool TestConnection()
         {
-            using (var conn = new MySqlConnection(_connectionString))
+            try
             {
-                conn.Open();
-                string createTableQuery = @"
-                    CREATE TABLE IF NOT EXISTS tasks (
-                        id INT AUTO_INCREMENT PRIMARY KEY,
-                        title VARCHAR(255) NOT NULL,
-                        description TEXT,
-                        reminder_date DATETIME,
-                        is_completed BOOLEAN DEFAULT FALSE,
-                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-                    )";
-                using (var cmd = new MySqlCommand(createTableQuery, conn))
+                using (var conn = new MySqlConnection(_connectionString))
                 {
-                    cmd.ExecuteNonQuery();
+                    conn.Open();
+                    return true;
                 }
+            }
+            catch
+            {
+                return false;
             }
         }
 
         public int AddTask(string title, string description, DateTime? reminderDate = null)
         {
+            if (!_isConnected)
+            {
+                throw new Exception("Database is not connected.");
+            }
+
             using (var conn = new MySqlConnection(_connectionString))
             {
                 conn.Open();
@@ -46,7 +64,7 @@ namespace CybersecurityChatbot
                 using (var cmd = new MySqlCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("@title", title);
-                    cmd.Parameters.AddWithValue("@description", description);
+                    cmd.Parameters.AddWithValue("@description", description ?? "");
                     cmd.Parameters.AddWithValue("@reminderDate", reminderDate ?? (object)DBNull.Value);
                     return Convert.ToInt32(cmd.ExecuteScalar());
                 }
@@ -107,13 +125,18 @@ namespace CybersecurityChatbot
                 }
             }
         }
+
+        public bool IsConnected()
+        {
+            return _isConnected;
+        }
     }
 
     public class Task
     {
         public int Id { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
         public DateTime? ReminderDate { get; set; }
         public bool IsCompleted { get; set; }
         public DateTime CreatedAt { get; set; }

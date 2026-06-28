@@ -20,7 +20,6 @@ namespace CybersecurityChatbot
         private ActivityLogger _activityLogger = null!;
         private QuizManager _quizManager = null!;
 
-        // NLP state
         private bool _awaitingTaskTitle = false;
         private bool _awaitingTaskDescription = false;
         private bool _awaitingReminderDate = false;
@@ -59,7 +58,7 @@ namespace CybersecurityChatbot
                     }
                 }
             }
-            catch (Exception)
+            catch
             {
                 // Silently fail if audio can't play
             }
@@ -76,7 +75,6 @@ namespace CybersecurityChatbot
         {
             string lowerInput = userInput.ToLower().Trim();
 
-            // Step 1: Handle name capture if awaiting name
             if (_awaitingName)
             {
                 if (!string.IsNullOrWhiteSpace(userInput))
@@ -98,27 +96,23 @@ namespace CybersecurityChatbot
                 }
             }
 
-            // Check for quiz commands
             if (lowerInput.Contains("quiz") || lowerInput.Contains("game") ||
                 lowerInput.Contains("test my knowledge") || lowerInput.Contains("play"))
             {
                 return StartQuiz();
             }
 
-            // Check if currently in quiz
             if (_quizManager.IsQuizActive())
             {
                 return ProcessQuizAnswer(userInput);
             }
 
-            // Check for activity log request
             if (lowerInput.Contains("show activity") || lowerInput.Contains("what have you done") ||
                 lowerInput.Contains("activity log") || lowerInput.Contains("log"))
             {
                 return _activityLogger.GetFormattedLog();
             }
 
-            // Check for task management
             if (lowerInput.Contains("add task") || lowerInput.Contains("new task") ||
                 lowerInput.Contains("create task") || lowerInput.Contains("task add"))
             {
@@ -141,20 +135,17 @@ namespace CybersecurityChatbot
                 return DeleteTask(userInput);
             }
 
-            // Check for reminder addition
             if (lowerInput.Contains("remind me") || lowerInput.Contains("set reminder") ||
                 lowerInput.Contains("remember to"))
             {
                 return HandleReminder(userInput);
             }
 
-            // Check for exit command
             if (IsExitCommand(lowerInput))
             {
                 return GetExitMessage();
             }
 
-            // Check for special phrases
             if (lowerInput.Contains("how are you"))
             {
                 return GetHowAreYouResponse();
@@ -165,17 +156,14 @@ namespace CybersecurityChatbot
                 return GetHelpResponse();
             }
 
-            // Handle follow-up questions
             if (IsFollowUp(lowerInput) && !string.IsNullOrEmpty(_lastTopic))
             {
                 return HandleFollowUp();
             }
 
-            // Detect sentiment
             Sentiment sentiment = _sentimentDetector!.Detect(userInput);
             string sentimentResponse = _sentimentDetector.GetSentimentResponse(sentiment);
 
-            // Check for keyword matches
             string? keywordResponse = _keywordResponder!.GetResponse(userInput);
 
             if (keywordResponse != null)
@@ -198,13 +186,11 @@ namespace CybersecurityChatbot
                 return sentimentResponse + keywordResponse;
             }
 
-            // Check if we're in a multi-step interaction
             if (_awaitingTaskTitle || _awaitingTaskDescription || _awaitingReminderDate)
             {
                 return HandleTaskFlow(userInput);
             }
 
-            // Fallback response
             return GetFallbackResponse();
         }
 
@@ -249,7 +235,6 @@ namespace CybersecurityChatbot
 
         private string HandleTaskAddition(string userInput)
         {
-            // Extract task title
             string taskTitle = ExtractTaskTitle(userInput);
             if (!string.IsNullOrEmpty(taskTitle))
             {
@@ -292,7 +277,6 @@ namespace CybersecurityChatbot
                 }
                 else
                 {
-                    // Save task without reminder
                     SaveTask(_pendingTaskTitle, _pendingTaskDescription, null);
                     _awaitingReminderDate = false;
                     return $"Task '{_pendingTaskTitle}' saved successfully! 📝\n\n" +
@@ -300,7 +284,6 @@ namespace CybersecurityChatbot
                 }
             }
 
-            // Parse reminder date
             DateTime? reminderDate = ParseReminderDate(userInput);
             if (reminderDate.HasValue)
             {
@@ -393,7 +376,6 @@ namespace CybersecurityChatbot
             string reminderText = ExtractReminderText(userInput);
             if (!string.IsNullOrEmpty(reminderText))
             {
-                // Extract date
                 string dateText = "";
                 DateTime? reminderDate = null;
 
@@ -414,7 +396,6 @@ namespace CybersecurityChatbot
                 }
                 else
                 {
-                    // Try to parse a date
                     var dateMatch = Regex.Match(userInput, @"(\d{4}-\d{2}-\d{2})");
                     if (dateMatch.Success)
                     {
@@ -461,7 +442,6 @@ namespace CybersecurityChatbot
                 }
             }
 
-            // If no clear title, use the whole input after "add task" etc.
             string[] prefixes = { "add task ", "new task ", "task ", "create task " };
             foreach (var prefix in prefixes)
             {
@@ -476,14 +456,12 @@ namespace CybersecurityChatbot
 
         private string ExtractReminderText(string input)
         {
-            // Remove common reminder phrases
-            string[] prefixes = { "remind me to ", "set reminder to ", "remember to " };
+            string[] prefixes = { "remind me to ", "set reminder to ", "remember to ", "remind" };
             foreach (var prefix in prefixes)
             {
                 if (input.ToLower().Contains(prefix))
                 {
                     string text = input.Substring(input.ToLower().IndexOf(prefix) + prefix.Length);
-                    // Remove date references
                     text = Regex.Replace(text, @"\s*(in \d+ days?|tomorrow|on \d{4}-\d{2}-\d{2}).*$", "");
                     return text.Trim();
                 }
@@ -495,13 +473,11 @@ namespace CybersecurityChatbot
         {
             input = input.ToLower().Trim();
 
-            // Tomorrow
             if (input == "tomorrow" || input.Contains("tomorrow"))
             {
                 return DateTime.Now.AddDays(1);
             }
 
-            // In X days
             var match = Regex.Match(input, @"in (\d+) days?");
             if (match.Success)
             {
@@ -509,7 +485,6 @@ namespace CybersecurityChatbot
                 return DateTime.Now.AddDays(days);
             }
 
-            // In X weeks
             match = Regex.Match(input, @"in (\d+) weeks?");
             if (match.Success)
             {
@@ -517,7 +492,6 @@ namespace CybersecurityChatbot
                 return DateTime.Now.AddDays(weeks * 7);
             }
 
-            // Specific date (YYYY-MM-DD)
             match = Regex.Match(input, @"(\d{4}-\d{2}-\d{2})");
             if (match.Success)
             {
@@ -527,7 +501,6 @@ namespace CybersecurityChatbot
                 }
             }
 
-            // Next week
             if (input.Contains("next week"))
             {
                 return DateTime.Now.AddDays(7);

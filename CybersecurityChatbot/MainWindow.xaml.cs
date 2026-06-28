@@ -19,13 +19,10 @@ namespace CybersecurityChatbot
         {
             _chatBot = new ChatBot();
 
-            // Play voice greeting
             _chatBot.PlayVoiceGreeting();
 
-            // Display ASCII art
             LoadAsciiArt();
 
-            // Get initial greeting from bot
             string greeting = _chatBot.GetGreeting();
             AppendBotMessage(greeting);
         }
@@ -83,19 +80,14 @@ namespace CybersecurityChatbot
                 return;
             }
 
-            // Display user message
             AppendUserMessage(userMessage);
 
-            // Clear input box
             UserInput.Clear();
 
-            // Process input through chatbot
             string botResponse = _chatBot.ProcessInput(userMessage);
 
-            // Display bot response
             AppendBotMessage(botResponse);
 
-            // Scroll to botom
             ScrollToBottom();
         }
 
